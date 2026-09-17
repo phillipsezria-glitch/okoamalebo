@@ -245,6 +245,66 @@ body {
   width: 100%;
 }
 
+.splash-screen {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(circle at center, rgba(188, 224, 198, 0.9), rgba(12, 23, 20, 0.96) 46%, rgba(8, 15, 13, 1) 100%);
+  color: #edf5ef;
+  touch-action: manipulation;
+}
+
+.splash-screen__backdrop {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(24, 42, 39, 0.2), rgba(8, 15, 13, 0.4));
+}
+
+.splash-core {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 12rem;
+  height: 12rem;
+  isolation: isolate;
+}
+
+.splash-core__pulse,
+.splash-core__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(201, 234, 215, 0.7);
+  background: radial-gradient(circle, rgba(132, 201, 162, 0.2), rgba(132, 201, 162, 0.05) 48%, transparent 74%);
+}
+
+.splash-core__ring {
+  inset: 1.1rem;
+  border-color: rgba(248, 214, 162, 0.9);
+  background: radial-gradient(circle, rgba(255, 226, 169, 0.22), rgba(255, 226, 169, 0.06) 52%, transparent 78%);
+}
+
+.splash-core__icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  z-index: 1;
+}
+
+.splash-screen__tagline {
+  position: absolute;
+  bottom: 7.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 0.76rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(237, 245, 239, 0.78);
+}
+
 @media (max-width: 767px) {
   body {
     display: flex;

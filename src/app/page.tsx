@@ -1,4 +1,6 @@
 'use client';
+import { AnimatePresence, motion } from 'motion/react';
+import { useEffect, useState } from 'react';
 import { useProfile } from '@/hooks/useProfile';
 import { useSOS } from '@/hooks/useSOS';
 import { OnboardingWizard } from '@/components/OnboardingWizard';
@@ -21,16 +23,23 @@ import { ChapterNav } from '@/components/ChapterNav';
 export default function Dashboard() {
   const { profile, isLoaded, isOnboarded, sobrietyDuration, createProfile, updateProfile } = useProfile();
   const sos = useSOS(profile?.id || null);
+  const [showSplash, setShowSplash] = useState(true);
 
-  if (!isLoaded) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-[var(--background)]">
-        <div className="text-center">
-          <div className="text-4xl mb-4">🌿</div>
-          <p className="text-[var(--muted)]">Loading Okoa Malebo...</p>
-        </div>
-      </div>
-    );
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    const timer = window.setTimeout(() => setShowSplash(false), 1200);
+    const handleSkip = () => setShowSplash(false);
+
+    window.addEventListener('pointerdown', handleSkip, { passive: true, once: true });
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener('pointerdown', handleSkip);
+    };
+  }, [isLoaded]);
+
+  if (!isLoaded || showSplash) {
+    return <SplashScreen onSkip={() => setShowSplash(false)} />;
   }
 
   if (!isOnboarded) {
@@ -175,5 +184,59 @@ function ChapterHeader({ number, eyebrow, title }: { number: string; eyebrow: st
         <h2 className="chapter-header__title">{title}</h2>
       </div>
     </div>
+  );
+}
+
+function SplashScreen({ onSkip }: { onSkip: () => void }) {
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        key="splash-screen"
+        className="splash-screen"
+        initial={{ opacity: 1 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0, transition: { duration: 0.45, ease: 'easeInOut' } }}
+        onPointerDown={onSkip}
+      >
+        <motion.div
+          className="splash-screen__backdrop"
+          initial={{ scale: 1.06, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.75, ease: 'easeOut' }}
+        />
+
+        <motion.div
+          className="splash-core"
+          initial={{ opacity: 0, scale: 0.78, y: 14 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <motion.div
+            className="splash-core__pulse"
+            initial={{ scale: 0.9, opacity: 0.3 }}
+            animate={{ scale: [0.9, 1.28, 1.42], opacity: [0.3, 0.85, 0.1] }}
+            transition={{ duration: 1.5, ease: 'easeOut', repeat: Number.POSITIVE_INFINITY, repeatDelay: 0.15 }}
+          />
+          <motion.div
+            className="splash-core__ring"
+            initial={{ scale: 0.8, opacity: 0.2 }}
+            animate={{ scale: [0.8, 1.1, 1.26], opacity: [0.2, 0.75, 0.15] }}
+            transition={{ duration: 1.6, ease: 'easeOut', repeat: Number.POSITIVE_INFINITY, repeatDelay: 0.1 }}
+          />
+          <div className="splash-core__icon">
+            <BrandMark size="lg" />
+          </div>
+        </motion.div>
+
+        <motion.p
+          className="splash-screen__tagline"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.6, ease: 'easeOut' }}
+        >
+          One day at a time
+        </motion.p>
+      </motion.div>
+    </AnimatePresence>
   );
 }
