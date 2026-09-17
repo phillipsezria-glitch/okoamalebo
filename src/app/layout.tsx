@@ -1,18 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-
-const display = Playfair_Display({
-  variable: "--font-display",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const grotesk = Space_Grotesk({
-  variable: "--font-grotesk",
-  subsets: ["latin"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "Okoa Malebo - Beat Cravings in Real Time",
@@ -40,19 +27,17 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
-    <html
-      lang="en"
-      className={`${display.variable} ${grotesk.variable} h-full antialiased`}
-      suppressHydrationWarning
-    >
+    <html lang="en" className="h-full bg-[#e9e7e3] antialiased" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#1c2b25" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       </head>
-      <body className="min-h-full flex flex-col">
-        {children}
+      <body className="min-h-full bg-[#e9e7e3] text-[var(--foreground)] antialiased">
+        <div className="mx-auto flex min-h-screen w-full flex-col overflow-hidden bg-[var(--background)] app-shell">
+          {children}
+        </div>
       </body>
     </html>
   );

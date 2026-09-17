@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
+import withPWA from "next-pwa";
 
 const nextConfig: NextConfig = {
-  // PWA support
   async headers() {
     return [
       {
@@ -19,7 +19,6 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  // Enable static export for offline capability
   output: 'export',
   trailingSlash: true,
   images: {
@@ -27,4 +26,13 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withPWA({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === 'development',
+  sw: 'sw.js',
+})({
+  ...nextConfig,
+  turbopack: {},
+});

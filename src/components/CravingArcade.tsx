@@ -47,6 +47,12 @@ export function CravingArcade() {
         </button>
       </div>
 
+      <div className="flex flex-wrap items-center gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">
+        <span className="rounded-full border border-[var(--line)] bg-[var(--surface-soft)] px-2.5 py-1.5">4 mini games</span>
+        <span className="rounded-full border border-[var(--line)] bg-[var(--surface-soft)] px-2.5 py-1.5">Tap any card to play</span>
+        <span className="rounded-full border border-[var(--line)] bg-[var(--surface-soft)] px-2.5 py-1.5">Exit anytime with X or Esc</span>
+      </div>
+
       {/* Grid of Games */}
       <div className="game-card-rail motion-stagger grid grid-cols-1 items-stretch gap-5 md:grid-cols-2 lg:grid-cols-4">
         {GAMES_CATALOG.map(game => (

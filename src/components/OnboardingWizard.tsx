@@ -92,19 +92,19 @@ export function OnboardingWizard({ onComplete, createProfile }: OnboardingWizard
         <div className="mb-8 text-center">
           <BrandMark size="lg" />
           <h1 className="mt-4 font-display text-4xl text-[var(--ink)]">Okoa Malebo</h1>
-          <p className="text-slate-600 mt-2">Ponda Raha, Sio Malebo</p>
+          <p className="mt-2 text-[var(--muted)]">Ponda Raha, Sio Malebo</p>
         </div>
 
-        <div className="flex justify-center gap-2 mb-8">
+        <div className="mb-8 flex justify-center gap-2">
           {[1, 2, 3, 4].map(n => (
-            <div key={n} className={`w-8 h-2 rounded-full transition-colors ${
-              n <= step ? 'bg-emerald-500' : 'bg-slate-200'
+            <div key={n} className={`h-2 w-8 rounded-full transition-colors ${
+              n <= step ? 'bg-[var(--clay)]' : 'bg-[var(--line)]'
             }`} />
           ))}
         </div>
 
-        <h2 className="text-xl font-semibold text-center">Step 1: What are you quitting?</h2>
-        <p className="text-slate-500 text-center text-sm">Select your primary substance</p>
+        <h2 className="text-center text-xl font-semibold text-[var(--ink)]">Step 1: What are you quitting?</h2>
+        <p className="text-center text-sm text-[var(--muted)]">Select your primary substance</p>
 
         <div className="grid grid-cols-2 gap-3" role="radiogroup" aria-label="Select substance">
           {SUBSTANCES.map(({ value, label, icon }) => (
@@ -112,16 +112,16 @@ export function OnboardingWizard({ onComplete, createProfile }: OnboardingWizard
               key={value}
               type="button"
               onClick={() => setSubstance(value)}
-              className={`p-4 rounded-xl border-2 transition-all text-left ${
+              className={`rounded-xl border-2 p-4 text-left transition-all ${
                 substance === value
-                  ? 'border-emerald-500 bg-emerald-50 ring-2 ring-emerald-200'
-                  : 'border-slate-200 hover:border-emerald-300'
+                  ? 'border-[var(--clay)] bg-[var(--surface-soft)] ring-2 ring-[color:color-mix(in_srgb,var(--clay)_30%,transparent)]'
+                  : 'border-[var(--line)] bg-[var(--paper)]/70 hover:border-[var(--clay)]'
               }`}
               role="radio"
               aria-checked={substance === value}
             >
-              <div className="text-3xl mb-2">{icon}</div>
-              <div className="font-medium text-slate-700">{label}</div>
+              <div className="mb-2 text-3xl">{icon}</div>
+              <div className="font-medium text-[var(--ink)]">{label}</div>
             </button>
           ))}
         </div>
@@ -139,21 +139,21 @@ export function OnboardingWizard({ onComplete, createProfile }: OnboardingWizard
   if (step === 2) {
     return (
       <div className="onboarding-card max-w-md mx-auto p-6 space-y-6">
-        <div className="flex justify-center gap-2 mb-8">
+        <div className="mb-8 flex justify-center gap-2">
           {[1, 2, 3, 4].map(n => (
-            <div key={n} className={`w-8 h-2 rounded-full transition-colors ${
-              n <= step ? 'bg-emerald-500' : 'bg-slate-200'
+            <div key={n} className={`h-2 w-8 rounded-full transition-colors ${
+              n <= step ? 'bg-[var(--clay)]' : 'bg-[var(--line)]'
             }`} />
           ))}
         </div>
 
-        <h2 className="text-xl font-semibold text-center">Step 2: Daily spend?</h2>
-        <p className="text-slate-500 text-center text-sm">How much do you spend per day on <span className="font-medium">{SUBSTANCE_LABELS[substance]}</span>?</p>
+        <h2 className="text-center text-xl font-semibold text-[var(--ink)]">Step 2: Daily spend?</h2>
+        <p className="text-center text-sm text-[var(--muted)]">How much do you spend per day on <span className="font-medium text-[var(--ink)]">{SUBSTANCE_LABELS[substance]}</span>?</p>
 
-        <div className="bg-slate-50 rounded-xl p-6">
-          <div className="flex items-baseline justify-center gap-2 mb-4">
-            <span className="text-5xl font-bold text-emerald-700">KES {dailyBudget.toLocaleString()}</span>
-            <span className="text-slate-500">/ day</span>
+        <div className="rounded-xl bg-[var(--surface-soft)] p-6">
+          <div className="mb-4 flex items-baseline justify-center gap-2">
+            <span className="text-5xl font-bold text-[var(--clay)]">KES {dailyBudget.toLocaleString()}</span>
+            <span className="text-[var(--muted)]">/ day</span>
           </div>
           <input
             type="range"
@@ -165,17 +165,17 @@ export function OnboardingWizard({ onComplete, createProfile }: OnboardingWizard
             className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600"
             aria-label="Daily budget in KES"
           />
-          <div className="flex justify-between text-xs text-slate-500 mt-2">
+          <div className="mt-2 flex justify-between text-xs text-[var(--muted)]">
             <span>KES 100</span>
             <span>KES 10,000</span>
           </div>
         </div>
 
         <div className="flex gap-3">
-          <button onClick={prevStep} className="flex-1 border-2 border-slate-300 text-slate-700 py-3 rounded-xl font-semibold hover:bg-slate-50 transition-colors">
+          <button onClick={prevStep} className="flex-1 rounded-xl border-2 border-[var(--line)] py-3 font-semibold text-[var(--ink)] transition-colors hover:bg-[var(--surface-soft)]">
             Back
           </button>
-          <button onClick={nextStep} className="flex-1 bg-emerald-600 text-white py-3 rounded-xl font-semibold hover:bg-emerald-700 transition-colors">
+          <button onClick={nextStep} className="flex-1 rounded-xl bg-[var(--clay)] py-3 font-semibold text-[var(--paper)] transition-colors hover:opacity-95">
             Continue
           </button>
         </div>
@@ -186,23 +186,23 @@ export function OnboardingWizard({ onComplete, createProfile }: OnboardingWizard
   if (step === 3) {
     return (
       <div className="onboarding-card max-w-md mx-auto p-6 space-y-6">
-        <div className="flex justify-center gap-2 mb-8">
+        <div className="mb-8 flex justify-center gap-2">
           {[1, 2, 3, 4].map(n => (
-            <div key={n} className={`w-8 h-2 rounded-full transition-colors ${
-              n <= step ? 'bg-emerald-500' : 'bg-slate-200'
+            <div key={n} className={`h-2 w-8 rounded-full transition-colors ${
+              n <= step ? 'bg-[var(--clay)]' : 'bg-[var(--line)]'
             }`} />
           ))}
         </div>
 
-        <h2 className="text-xl font-semibold text-center">Step 3: When did you quit?</h2>
-        <p className="text-slate-500 text-center text-sm">Your sobriety start date</p>
+        <h2 className="text-center text-xl font-semibold text-[var(--ink)]">Step 3: When did you quit?</h2>
+        <p className="text-center text-sm text-[var(--muted)]">Your sobriety start date</p>
 
         <div className="space-y-3" role="radiogroup" aria-label="Select quit date">
           {QUIT_OPTIONS.map(({ value, label, description }) => (
-            <label key={value} className={`flex items-center p-4 rounded-xl border-2 cursor-pointer transition-all ${
+            <label key={value} className={`flex cursor-pointer items-center rounded-xl border-2 p-4 transition-all ${
               quitOption === value
-                ? 'border-emerald-500 bg-emerald-50'
-                : 'border-slate-200 hover:border-emerald-300'
+                ? 'border-[var(--clay)] bg-[var(--surface-soft)]'
+                : 'border-[var(--line)] bg-[var(--paper)]/65 hover:border-[var(--clay)]'
             }`}>
               <input
                 type="radio"
@@ -210,11 +210,11 @@ export function OnboardingWizard({ onComplete, createProfile }: OnboardingWizard
                 value={value}
                 checked={quitOption === value}
                 onChange={() => setQuitOption(value)}
-                className="w-5 h-5 text-emerald-600 border-slate-300 focus:ring-emerald-500"
+                className="h-5 w-5 border-[var(--line)] text-[var(--clay)] focus:ring-[var(--clay)]"
               />
               <div className="ml-3">
-                <div className="font-medium text-slate-700">{label}</div>
-                <div className="text-sm text-slate-500">{description}</div>
+                <div className="font-medium text-[var(--ink)]">{label}</div>
+                <div className="text-sm text-[var(--muted)]">{description}</div>
               </div>
             </label>
           ))}
@@ -222,22 +222,22 @@ export function OnboardingWizard({ onComplete, createProfile }: OnboardingWizard
 
         {quitOption === 'custom' && (
           <div className="mt-4">
-            <label className="block text-sm font-medium text-slate-700 mb-2">Select date</label>
+            <label className="mb-2 block text-sm font-medium text-[var(--ink)]">Select date</label>
             <input
               type="date"
               value={customDate}
               onChange={(e) => setCustomDate(e.target.value)}
               max={new Date().toISOString().split('T')[0]}
-              className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-emerald-500 focus:outline-none"
+              className="w-full rounded-xl border-2 border-[var(--line)] bg-[var(--paper)] px-4 py-3 text-[var(--ink)] focus:border-[var(--clay)] focus:outline-none"
             />
           </div>
         )}
 
         <div className="flex gap-3">
-          <button onClick={prevStep} className="flex-1 border-2 border-slate-300 text-slate-700 py-3 rounded-xl font-semibold hover:bg-slate-50 transition-colors">
+          <button onClick={prevStep} className="flex-1 rounded-xl border-2 border-[var(--line)] py-3 font-semibold text-[var(--ink)] transition-colors hover:bg-[var(--surface-soft)]">
             Back
           </button>
-          <button onClick={nextStep} className="flex-1 bg-emerald-600 text-white py-3 rounded-xl font-semibold hover:bg-emerald-700 transition-colors">
+          <button onClick={nextStep} className="flex-1 rounded-xl bg-[var(--clay)] py-3 font-semibold text-[var(--paper)] transition-colors hover:opacity-95">
             Continue
           </button>
         </div>
@@ -248,33 +248,33 @@ export function OnboardingWizard({ onComplete, createProfile }: OnboardingWizard
   if (step === 4) {
     return (
       <div className="onboarding-card max-w-md mx-auto p-6 space-y-6">
-        <div className="flex justify-center gap-2 mb-8">
+        <div className="mb-8 flex justify-center gap-2">
           {[1, 2, 3, 4].map(n => (
-            <div key={n} className={`w-8 h-2 rounded-full transition-colors ${
-              n <= step ? 'bg-emerald-500' : 'bg-slate-200'
+            <div key={n} className={`h-2 w-8 rounded-full transition-colors ${
+              n <= step ? 'bg-[var(--clay)]' : 'bg-[var(--line)]'
             }`} />
           ))}
         </div>
 
-        <h2 className="text-xl font-semibold text-center">Step 4: Your anonymous handle</h2>
-        <p className="text-slate-500 text-center text-sm">This is the name attached to your private recovery notes (optional)</p>
+        <h2 className="text-center text-xl font-semibold text-[var(--ink)]">Step 4: Your anonymous handle</h2>
+        <p className="text-center text-sm text-[var(--muted)]">This is the name attached to your private recovery notes (optional)</p>
 
-        <div className="bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4 mb-4">
-          <div className="text-sm text-emerald-700 mb-1">Suggested:</div>
-          <div className="font-mono text-lg font-semibold text-emerald-900" id="suggested-handle">
+        <div className="mb-4 rounded-xl border-2 border-[var(--line)] bg-[var(--surface-soft)] p-4">
+          <div className="mb-1 text-sm text-[var(--clay)]">Suggested:</div>
+          <div className="font-mono text-lg font-semibold text-[var(--ink)]" id="suggested-handle">
             {suggestedHandle}
           </div>
           <button
             type="button"
             onClick={handleGenerateAnother}
-            className="mt-2 text-sm text-emerald-600 hover:underline"
+            className="mt-2 text-sm text-[var(--clay)] hover:underline"
           >
             Generate another
           </button>
         </div>
 
         <div>
-          <label htmlFor="pseudoHandle" className="block text-sm font-medium text-slate-700 mb-2">
+          <label htmlFor="pseudoHandle" className="mb-2 block text-sm font-medium text-[var(--ink)]">
             Or choose your own:
           </label>
           <input

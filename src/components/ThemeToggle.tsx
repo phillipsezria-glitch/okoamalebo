@@ -7,28 +7,36 @@ type Theme = 'light' | 'dark';
 
 export function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>('light');
+  const [isPulling, setIsPulling] = useState(false);
 
   useEffect(() => {
-    const updateTheme = window.setTimeout(() => {
-      const savedTheme = localStorage.getItem('okoa_theme') as Theme | null;
-      const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      const nextTheme = savedTheme === 'dark' || savedTheme === 'light' ? savedTheme : preferredTheme;
-      setTheme(nextTheme);
-      document.documentElement.dataset.theme = nextTheme;
-    }, 0);
-
-    return () => window.clearTimeout(updateTheme);
+    const savedTheme = localStorage.getItem('okoa_theme') as Theme | null;
+    const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const nextTheme = savedTheme === 'dark' || savedTheme === 'light' ? savedTheme : preferredTheme;
+    setTheme(nextTheme);
+    document.documentElement.dataset.theme = nextTheme;
   }, []);
 
-  const toggleTheme = () => {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    document.documentElement.classList.add('theme-transition');
+  const applyTheme = (nextTheme: Theme) => {
     setTheme(nextTheme);
     localStorage.setItem('okoa_theme', nextTheme);
     document.documentElement.dataset.theme = nextTheme;
+  };
+
+  const toggleTheme = () => {
+    if (isPulling) return;
+    setIsPulling(true);
+    document.documentElement.classList.remove('theme-glow-active');
+    void document.documentElement.offsetWidth;
+    document.documentElement.classList.add('theme-glow-active');
     window.setTimeout(() => {
-      document.documentElement.classList.remove('theme-transition');
-    }, 300);
+      const nextTheme = theme === 'dark' ? 'light' : 'dark';
+      applyTheme(nextTheme);
+    }, 220);
+    window.setTimeout(() => {
+      document.documentElement.classList.remove('theme-glow-active');
+      setIsPulling(false);
+    }, 700);
   };
 
   const isDark = theme === 'dark';
@@ -36,16 +44,17 @@ export function ThemeToggle() {
   return (
     <button
       type="button"
-      className={`theme-toggle gravity-switch ${isDark ? 'gravity-switch--dark' : ''}`}
+      className={`theme-switcher ${isDark ? 'theme-switcher--dark' : 'theme-switcher--light'} ${isPulling ? 'theme-switcher--pulling' : ''}`}
       onClick={toggleTheme}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      aria-pressed={isDark}
     >
-      <span className="gravity-switch__track" aria-hidden="true">
-        <span className="gravity-switch__label gravity-switch__label--day">DAY</span>
-        <span className="gravity-switch__label gravity-switch__label--night">NIGHT</span>
-        <span className="gravity-switch__weight">
-          {isDark ? <Sun size={15} /> : <Moon size={15} />}
+      <span className="theme-switcher__cord" aria-hidden="true" />
+      <span className="theme-switcher__flash" aria-hidden="true" />
+      <span className="theme-switcher__fixture" aria-hidden="true">
+        <span className="theme-switcher__knob">
+          {isDark ? <Sun size={18} /> : <Moon size={18} />}
         </span>
       </span>
     </button>

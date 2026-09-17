@@ -16,9 +16,8 @@ import { TodaysMission } from '@/components/TodaysMission';
 import { CursorConstellation } from '@/components/CursorConstellation';
 import { RecoveryToolkit } from '@/components/RecoveryToolkit';
 import { BrandMark } from '@/components/BrandMark';
-import { ScrollProgress } from '@/components/ScrollProgress';
-import { ScrollComet } from '@/components/ScrollComet';
 import { ChapterNav } from '@/components/ChapterNav';
+import { motion } from 'motion/react';
 
 export default function Dashboard() {
   const { profile, isLoaded, isOnboarded, sobrietyDuration, createProfile, updateProfile } = useProfile();
@@ -50,55 +49,71 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--background)] pb-24 text-[var(--foreground)]">
+    <div className="min-h-screen bg-[var(--background)] pb-28 text-[var(--foreground)]">
       <CursorConstellation />
-      <ScrollProgress />
-      <ChapterNav />
-      <header className="relative overflow-hidden border-b border-[var(--line)] bg-[linear-gradient(120deg,var(--header-start),var(--header-end))]">
-        <div className="pointer-events-none absolute -right-24 -top-32 h-80 w-80 rounded-full border-[28px] border-white/20" />
-        <div className="mx-auto max-w-6xl px-5 pt-4 md:px-8">
-          <header className="border-b border-[var(--line)] bg-[var(--background)]/80 backdrop-blur-md min-h-20 flex items-center justify-between">
-            <div className="flex items-center gap-3">
+
+      <header className="border-b border-[var(--line)] bg-[linear-gradient(135deg,var(--header-start),var(--header-end))]">
+        <div className="px-3 pb-4 pt-3">
+          <div className="flex items-center justify-between gap-3 rounded-full border border-[var(--line)] bg-[var(--paper)]/75 px-3 py-2 shadow-[0_10px_30px_var(--shadow-color)] backdrop-blur-md">
+            <div className="flex min-w-0 items-center gap-3">
               <BrandMark />
-              <div>
-                <p className="font-display text-lg leading-none">Okoa Malebo</p>
-                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">Private recovery space</p>
+              <div className="min-w-0">
+                <p className="text-base font-semibold leading-none text-[var(--ink)]">Okoa Malebo</p>
+                <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--muted)]">Private recovery space</p>
               </div>
             </div>
             <ThemeToggle />
-          </header>
+          </div>
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-[1fr_300px]">
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-[var(--clay)]">Kenya / one day at a time</p>
-              <h1 className="font-display text-5xl md:text-7xl leading-[0.86] tracking-[-0.04em] text-[var(--ink)]">A clearer<br /><span className="text-[var(--clay)]">next step</span></h1>
-              <p className="mt-3 text-sm leading-relaxed text-[var(--ink)]/80">Tools for the next ten minutes, the next honest conversation, and the next day without substances.</p>
+          <div className="mt-3 space-y-3">
+            <div className="rounded-[1.5rem] border border-[var(--line)] bg-[var(--paper)]/80 p-4 shadow-[0_18px_40px_var(--shadow-color)] backdrop-blur-md">
+              <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-[var(--clay)]">Kenya / one day at a time</p>
+              <h1 className="mt-2 text-[2rem] font-semibold leading-[0.94] tracking-[-0.05em] text-[var(--ink)]">
+                A clearer
+                <span className="mt-1 block text-[var(--ink)]">next step</span>
+              </h1>
+              <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
+                Tools for the next ten minutes, the next honest conversation, and the next day without substances.
+              </p>
             </div>
-            <div className="rounded-xl border border-white/20 bg-white/20 p-5 backdrop-blur-sm">
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">Your journey</p>
-              <p className="font-display text-2xl md:text-3xl leading-none text-[var(--ink)]">{profile?.pseudoHandle}</p>
-              <div className="mt-3 flex items-end justify-between">
-                <span className="text-xs font-medium text-[var(--muted)]">Current streak</span>
-                <span className="font-mono text-lg font-bold text-[var(--ink)]">{sobrietyDuration.days}d {sobrietyDuration.hours}h</span>
+
+            <div className="rounded-[1.25rem] border border-[var(--line)] bg-[var(--paper)]/80 p-3 shadow-[0_18px_40px_var(--shadow-color)] backdrop-blur-md">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">Your journey</p>
+                <span className="rounded-full border border-[var(--line)] bg-[var(--surface-soft)] px-2 py-1 text-[9px] font-bold uppercase tracking-[0.16em] text-[var(--clay)]">Live</span>
+              </div>
+              <p className="mt-2 text-2xl font-semibold leading-none text-[var(--ink)]">{profile?.pseudoHandle}</p>
+              <div className="mt-3 rounded-2xl border border-[var(--line)] bg-[var(--surface-soft)] p-3">
+                <div className="flex items-end justify-between gap-3">
+                  <span className="text-xs font-medium text-[var(--muted)]">Current streak</span>
+                  <span className="font-mono text-lg font-bold text-[var(--ink)]">{sobrietyDuration.days}d {sobrietyDuration.hours}h</span>
+                </div>
               </div>
             </div>
           </div>
-          <ScrollComet />
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl space-y-8 overflow-hidden px-4 py-8 sm:px-5 md:space-y-10 md:px-8 md:py-12">
+      <main className="space-y-3 px-3 py-3">
         <section id="today-mission" className="chapter-section chapter-section--today scroll-mt-6" data-chapter="01 / TODAY">
           <ChapterHeader number="01" eyebrow="Today" title="One choice at a time." />
-          <TodaysMission />
-          <RecoveryToolkit />
+          <div className="rounded-[1.75rem] border border-[var(--line)] bg-[var(--paper)] p-3 shadow-[0_10px_30px_var(--shadow-color)]">
+            <TodaysMission />
+          </div>
+          <div className="rounded-[1.75rem] border border-[var(--line)] bg-[var(--paper)] p-3 shadow-[0_10px_30px_var(--shadow-color)]">
+            <RecoveryToolkit />
+          </div>
         </section>
 
         <section id="recovery" className="chapter-section chapter-section--recovery" data-chapter="02 / RECOVERY">
           <ChapterHeader number="02" eyebrow="Recovery" title="Notice the progress." />
-          <div className="motion-stagger grid grid-cols-1 gap-6 md:grid-cols-[1.15fr_0.85fr] md:items-start">
-            <SobrietyOdometer />
-            <PiggyBank />
+          <div className="motion-stagger grid grid-cols-1 gap-4">
+            <div className="rounded-[1.75rem] border border-[var(--line)] bg-[var(--paper)] p-3 shadow-[0_10px_30px_var(--shadow-color)]">
+              <SobrietyOdometer />
+            </div>
+            <div className="rounded-[1.75rem] border border-[var(--line)] bg-[var(--paper)] p-3 shadow-[0_10px_30px_var(--shadow-color)]">
+              <PiggyBank />
+            </div>
           </div>
           <div id="check-in" className="scroll-mt-6">
             <RecoveryGuide />
@@ -120,13 +135,19 @@ export default function Dashboard() {
 
         <section id="support" className="chapter-section chapter-section--support" data-chapter="04 / SUPPORT">
           <ChapterHeader number="04" eyebrow="Support" title="You do not do this alone." />
-          <div id="notes" className="grid scroll-mt-6 grid-cols-1 gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-            <MoodCheckIn />
-            <WallOfHope />
+          <div id="notes" className="grid scroll-mt-6 grid-cols-1 gap-4">
+            <div className="rounded-[1.75rem] border border-[var(--line)] bg-[var(--paper)] p-3 shadow-[0_10px_30px_var(--shadow-color)]">
+              <MoodCheckIn />
+            </div>
+            <div className="rounded-[1.75rem] border border-[var(--line)] bg-[var(--paper)] p-3 shadow-[0_10px_30px_var(--shadow-color)]">
+              <WallOfHope />
+            </div>
           </div>
           <CountyDirectory />
         </section>
       </main>
+
+      <ChapterNav />
 
       {/* SOS Button & Modal */}
       <SOSButton onClick={sos.openSOS} />

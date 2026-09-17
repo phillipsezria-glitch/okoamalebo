@@ -90,8 +90,9 @@ export function ChapterNav() {
             href={`#${chapter.id}`}
             className={`chapter-nav__item ${active === chapter.id ? 'chapter-nav__item--active' : ''}`}
             aria-current={active === chapter.id ? 'page' : undefined}
+            title={chapter.label}
           >
-            <Icon size={16} />
+            <Icon size={15} />
             <span>{chapter.label}</span>
           </a>
         );

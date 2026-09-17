@@ -78,13 +78,19 @@ export function ArcadeModal({
             </button>
             <button
               onClick={onClose}
-              className="flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--clay)] bg-[var(--clay)] text-white shadow-sm hover:brightness-90 active:translate-y-1 active:shadow-none transition-all"
+              className="flex items-center gap-2 rounded-xl border border-[var(--clay)] bg-[var(--clay)] px-2.5 py-2 text-white shadow-sm hover:brightness-90 active:translate-y-1 active:shadow-none transition-all"
               title="Exit (ESC)"
-              aria-label="Close modal"
+              aria-label="Close game and return to arcade"
             >
-              <X size={18} />
+              <X size={16} />
+              <span className="text-[10px] font-black uppercase tracking-[0.18em]">Exit</span>
             </button>
           </div>
+        </div>
+
+        <div className="flex items-center justify-between gap-3 border-b border-[var(--line)] bg-[var(--surface-soft)] px-5 py-2.5 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">
+          <span>How to play: {subtitle}</span>
+          <span className="rounded-full border border-[var(--line)] bg-[var(--paper)] px-2 py-1 text-[var(--ink)]">Exit anytime • X or Esc</span>
         </div>
 
         {/* Dynamic Header HUD Stats (Score, Time, Multiplier, Streak) */}

@@ -103,6 +103,11 @@ export function ArcadeCard({ game, profile, onPlay }: Props) {
             {game.description}
           </p>
 
+          <div className="mt-3 flex items-center justify-between gap-2 rounded-xl border border-[var(--line)] bg-[var(--surface-soft)] px-2.5 py-2 text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--muted)]">
+            <span>1 min reset</span>
+            <span className="text-[var(--ink)]">How to play</span>
+          </div>
+
           {/* Neuro Impact Chip */}
         </div>
 

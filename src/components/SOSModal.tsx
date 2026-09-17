@@ -263,13 +263,12 @@ export function SOSButton({ onClick }: { onClick: () => void }) {
   return (
     <button
       onClick={onClick}
-      className="fixed bottom-6 right-6 z-40 flex h-16 w-16 flex-col items-center justify-center rounded-full bg-red-600 text-white shadow-lg animate-pulse transition-transform hover:scale-105"
+      className="fixed bottom-20 right-4 z-40 flex h-14 w-14 flex-col items-center justify-center rounded-full bg-red-600 text-white shadow-[0_18px_36px_rgba(220,38,38,0.35)] transition-transform hover:scale-105 active:scale-95"
       aria-label="Open 60-second craving support and grounding"
       title="Open 60-second craving support and grounding"
     >
-      <span className="text-2xl">🚨</span>
-      <span className="text-xs font-bold tracking-wider">SOS</span>
-      <span className="text-[8px] font-bold uppercase tracking-[0.08em] text-white/80">60 sec</span>
+      <span className="text-xl leading-none">🚨</span>
+      <span className="text-[9px] font-black uppercase tracking-[0.12em]">SOS</span>
     </button>
   );
 }
