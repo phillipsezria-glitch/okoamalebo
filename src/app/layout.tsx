@@ -35,7 +35,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       </head>
       <body className="min-h-full bg-[#e9e7e3] text-[var(--foreground)] antialiased">
-        <div className="mx-auto flex min-h-screen w-full flex-col overflow-hidden bg-[var(--background)] app-shell">
+        <div className="mx-auto flex min-h-[100dvh] w-full flex-col bg-[var(--background)] app-shell">
           {children}
         </div>
       </body>

@@ -5,7 +5,7 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useProfile } from '@/hooks/useProfile';
 
 export function PiggyBank() {
@@ -13,29 +13,57 @@ export function PiggyBank() {
   const [animatedValue, setAnimatedValue] = useState(0);
   const [showCelebration, setShowCelebration] = useState(false);
 
+  const animationFrameRef = useRef<number | null>(null);
+  const currentValueRef = useRef<number>(0);
+
   // Animate the counter
   useEffect(() => {
     const duration = 1500;
-    const startTime = Date.now();
-    const startValue = animatedValue;
-    
-    const animate = () => {
-      const elapsed = Date.now() - startTime;
+    const startValue = currentValueRef.current;
+    const targetValue = totalSaved;
+    const startTime = performance.now();
+
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+    }
+
+    const animate = (now: number) => {
+      const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
-      const current = Math.floor(startValue + (totalSaved - startValue) * eased);
+
+      const current = Math.floor(startValue + (targetValue - startValue) * eased);
       setAnimatedValue(current);
-      
+      currentValueRef.current = current;
+
       if (progress < 1) {
-        requestAnimationFrame(animate);
-      } else if (totalSaved > startValue && totalSaved >= 200) {
-        setShowCelebration(true);
-        setTimeout(() => setShowCelebration(false), 3000);
+        animationFrameRef.current = requestAnimationFrame(animate);
+      } else {
+        setAnimatedValue(targetValue);
+        currentValueRef.current = targetValue;
+
+        if (targetValue > startValue && targetValue >= 200) {
+          setShowCelebration(true);
+        }
       }
     };
-    
-    animate();
-  }, [totalSaved, animatedValue]);
+
+    animationFrameRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [totalSaved]);
+
+  // Handle celebration timeout independently to prevent stuck state
+  useEffect(() => {
+    if (showCelebration) {
+      const timer = setTimeout(() => setShowCelebration(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showCelebration]);
 
   // Milestone thresholds
   const milestones = [
@@ -48,8 +76,8 @@ export function PiggyBank() {
 
   const nextMilestone = milestones.find(m => totalSaved < m.amount);
   const completedMilestones = milestones.filter(m => totalSaved >= m.amount);
-  const progress = nextMilestone 
-    ? (totalSaved / nextMilestone.amount) * 100 
+  const progress = nextMilestone
+    ? (totalSaved / nextMilestone.amount) * 100
     : 100;
 
   return (
@@ -83,7 +111,7 @@ export function PiggyBank() {
             <span>{Math.min(Math.round(progress), 100)}%</span>
           </div>
           <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
-            <div 
+            <div
               className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full transition-all duration-500"
               style={{ width: `${Math.min(progress, 100)}%` }}
             />
@@ -100,7 +128,7 @@ export function PiggyBank() {
           <p className="text-xs text-slate-500 mb-2">Milestones reached:</p>
           <div className="flex flex-wrap gap-2">
             {completedMilestones.map((m, i) => (
-              <span 
+              <span
                 key={m.amount}
                 className="bg-emerald-100 text-emerald-700 text-xs font-medium px-2 py-1 rounded-full flex items-center gap-1"
                 style={{ animationDelay: `${i * 100}ms` }}
@@ -113,8 +141,8 @@ export function PiggyBank() {
         </div>
       )}
 
-      {completedMilestones.length === 0 && !nextMilestone && (
-        <p className="text-center text-slate-500 text-sm relative z-10">
+      {completedMilestones.length === 0 && (
+        <p className="text-center text-slate-500 text-sm relative z-10 mt-4">
           Keep going! Every shilling counts 💪
         </p>
       )}
@@ -124,7 +152,7 @@ export function PiggyBank() {
 
 function Confetti() {
   const colors = ['#059669', '#D97706', '#3B82F6', '#EC4899', '#8B5CF6'];
-  
+
   return (
     <div className="absolute inset-0 overflow-hidden">
       {Array.from({ length: 30 }).map((_, i) => (
@@ -142,7 +170,7 @@ function ConfettiPiece({ color }: { color: string }) {
     size: 6 + Math.random() * 8,
     rotation: Math.random() * 360,
   }));
-  
+
   return (
     <div
       className="absolute top-0"
