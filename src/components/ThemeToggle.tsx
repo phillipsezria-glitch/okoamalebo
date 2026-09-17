@@ -22,13 +22,13 @@ export function ThemeToggle() {
 
   const toggleTheme = () => {
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    document.documentElement.classList.add('theme-switching');
+    document.documentElement.classList.add('theme-transition');
     setTheme(nextTheme);
     localStorage.setItem('okoa_theme', nextTheme);
     document.documentElement.dataset.theme = nextTheme;
     window.setTimeout(() => {
-      document.documentElement.classList.remove('theme-switching');
-    }, 560);
+      document.documentElement.classList.remove('theme-transition');
+    }, 300);
   };
 
   const isDark = theme === 'dark';
