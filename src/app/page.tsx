@@ -56,28 +56,28 @@ export default function Dashboard() {
       <ChapterNav />
       <header className="relative overflow-hidden border-b border-[var(--line)] bg-[linear-gradient(120deg,var(--header-start),var(--header-end))]">
         <div className="pointer-events-none absolute -right-24 -top-32 h-80 w-80 rounded-full border-[28px] border-white/20" />
-        <div className="mx-auto max-w-6xl px-5 pb-10 pt-5 md:px-8 md:pb-14">
-          <div className="mb-12 flex items-center justify-between">
+        <div className="mx-auto max-w-6xl px-5 pt-4 md:px-8">
+          <header className="border-b border-[var(--line)] bg-[var(--background)]/80 backdrop-blur-md min-h-20 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <BrandMark />
               <div>
                 <p className="font-display text-lg leading-none">Okoa Malebo</p>
-                <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">Private recovery space</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">Private recovery space</p>
               </div>
             </div>
             <ThemeToggle />
-          </div>
+          </header>
 
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_300px] md:items-end">
-            <div className="relative z-10">
-              <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.28em] text-[var(--clay)]">Kenya / one day at a time</p>
-              <h1 className="font-display max-w-3xl text-6xl leading-[0.86] tracking-[-0.06em] text-[var(--ink)] md:text-8xl">A clearer<br />next step<span className="text-[var(--clay)]">.</span></h1>
-              <p className="mt-6 max-w-lg text-sm font-medium leading-relaxed text-[var(--ink)]/80 md:text-base">Tools for the next ten minutes, the next honest conversation, and the next day without substances.</p>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-[1fr_300px]">
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-[var(--clay)]">Kenya / one day at a time</p>
+              <h1 className="font-display text-5xl md:text-7xl leading-[0.86] tracking-[-0.04em] text-[var(--ink)]">A clearer<br /><span className="text-[var(--clay)]">next step</span></h1>
+              <p className="mt-3 text-sm leading-relaxed text-[var(--ink)]/80">Tools for the next ten minutes, the next honest conversation, and the next day without substances.</p>
             </div>
-            <div className="relative z-10 rounded-3xl border border-white/30 bg-white/20 p-5 backdrop-blur-sm">
+            <div className="rounded-xl border border-white/20 bg-white/20 p-5 backdrop-blur-sm">
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">Your journey</p>
-              <p className="font-display mt-2 text-3xl leading-none text-[var(--ink)]">{profile?.pseudoHandle}</p>
-              <div className="mt-5 flex items-end justify-between border-t border-[var(--ink)]/15 pt-4">
+              <p className="font-display text-2xl md:text-3xl leading-none text-[var(--ink)]">{profile?.pseudoHandle}</p>
+              <div className="mt-3 flex items-end justify-between">
                 <span className="text-xs font-medium text-[var(--muted)]">Current streak</span>
                 <span className="font-mono text-lg font-bold text-[var(--ink)]">{sobrietyDuration.days}d {sobrietyDuration.hours}h</span>
               </div>
