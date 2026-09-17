@@ -17,7 +17,6 @@ import { CursorConstellation } from '@/components/CursorConstellation';
 import { RecoveryToolkit } from '@/components/RecoveryToolkit';
 import { BrandMark } from '@/components/BrandMark';
 import { ChapterNav } from '@/components/ChapterNav';
-import { motion } from 'motion/react';
 
 export default function Dashboard() {
   const { profile, isLoaded, isOnboarded, sobrietyDuration, createProfile, updateProfile } = useProfile();

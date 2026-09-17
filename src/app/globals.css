@@ -433,12 +433,14 @@ button, input, select, textarea {
 
 .chapter-nav {
   position: fixed;
-  left: 50%;
+  left: 0.5rem;
+  right: 0.5rem;
   bottom: max(0.75rem, env(safe-area-inset-bottom));
   z-index: 60;
-  display: flex;
-  width: min(calc(100% - 1rem), 24rem);
-  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: 24rem;
+  margin: 0 auto;
   gap: 0.35rem;
   padding: 0.35rem;
   border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
@@ -451,19 +453,20 @@ button, input, select, textarea {
 
 .chapter-nav__item {
   display: flex;
-  flex: 1 1 0%;
   min-width: 0;
   min-height: 2.8rem;
   align-items: center;
   justify-content: center;
   gap: 0.35rem;
+  padding-inline: 0.2rem;
   border-radius: 1rem;
   color: var(--muted);
   font-family: var(--font-sans);
-  font-size: 0.58rem;
+  font-size: clamp(0.45rem, 2.2vw, 0.58rem);
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
+  white-space: nowrap;
   transition: background-color 180ms ease, color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
 }
 
@@ -1024,19 +1027,22 @@ button, input, select, textarea {
 
 @media (max-width: 640px) {
   .chapter-nav {
+    left: 0.65rem;
     right: 0.65rem;
     bottom: max(0.65rem, env(safe-area-inset-bottom));
-    left: 0.65rem;
-    justify-content: space-between;
+    gap: 0.2rem;
+    padding: 0.25rem;
     border-radius: 1.1rem;
   }
 
   .chapter-nav__item {
     min-width: 0;
-    flex: 1;
+    min-height: 2.55rem;
     flex-direction: column;
-    gap: 0.15rem;
-    font-size: 0.48rem;
+    gap: 0.12rem;
+    font-size: 0.42rem;
+    letter-spacing: 0.02em;
+    padding-inline: 0.05rem;
   }
 
 }
